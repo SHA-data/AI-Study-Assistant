@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Buddy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" aria-label="Main Navigation">
+            <div class="sidebar-brand">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+                </svg>
+                <span>Study Buddy</span>
+            </div>
+
+            <div class="sidebar-content">
+                <div class="sidebar-nav">
+                    <a href="{{ url_for('chat') }}" class="nav-item {% if active_screen == 'chat' %}active{% endif %}">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                        <span>Study Chat</span>
+                    </a>
+                    <a href="{{ url_for('upload') }}" class="nav-item {% if active_screen == 'resource-center' %}active{% endif %}">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                        </svg>
+                        <span>Resource Center</span>
+                    </a>
+                </div>
+
+                {% if active_screen == 'chat' %}
+                <div class="sidebar-section">
+                    <div class="section-label" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Subjects</span>
+                        <button class="add-pill-btn" data-type="subject" style="background:none; border:none; color:var(--color-text-secondary); cursor:pointer; font-size: 16px;">+</button>
+                    </div>
+                    <div id="subjects-container"></div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="section-label" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Study Groups</span>
+                        <button class="add-pill-btn" data-type="group" style="background:none; border:none; color:var(--color-text-secondary); cursor:pointer; font-size: 16px;">+</button>
+                    </div>
+                    <div id="groups-container"></div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="member-identity" id="member-identity-btn" aria-haspopup="true" aria-expanded="false">
+                <div class="avatar" id="avatar-initials">?</div>
+                <div class="member-name-wrap">
+                    <span id="display-member-name">Member Name</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Panel -->
+        <main class="main-panel">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <!-- Welcome Modal -->
+    <div class="modal-overlay hidden" id="welcome-modal">
+        <div class="modal">
+            <h2>Welcome to Study Buddy</h2>
+            <input type="text" id="name-input" placeholder="Your name" aria-label="Enter your name">
+            <button class="btn-primary" id="save-name-btn">Enter</button>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <script>
+        const BACKEND_URL = "{{ BACKEND_URL }}";
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="resource-layout">
+    <header class="resource-header">
+        <h1 class="resource-title display-text">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+            Study Resource Center
+        </h1>
+        <button class="btn-primary" onclick="document.getElementById('upload-zone').scrollIntoView(); document.getElementById('upload-zone').focus();">
+            + New Upload
+        </button>
+    </header>
+
+    <!-- Upload Area -->
+    <div class="upload-zone" id="upload-zone" tabindex="0" role="button" aria-label="Upload file">
+        <svg class="upload-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        <h2 class="upload-heading display-text">Drag and drop</h2>
+        <p class="upload-subtext">Drop files here or Click to upload</p>
+
+        <div class="type-pills">
+            <button class="type-pill active" data-type="pdf">PDF</button>
+            <button class="type-pill" data-type="pptx">PowerPoint</button>
+            <button class="type-pill" data-type="text">Plain Text</button>
+
+        </div>
+        
+        <!-- Hidden file input for PDF and PPTX -->
+        <input type="file" id="file-input" accept=".pdf,.pptx" class="hidden">
+    </div>
+
+    <!-- Dynamic Metadata Flow (injected/toggled via JS based on type) -->
+    <div id="metadata-flow" class="upload-metadata hidden">
+        <!-- Content injected via JS -->
+    </div>
+
+    <!-- Uploads Table -->
+    <div class="table-container">
+        <div class="table-header-wrap" style="padding: 16px;">
+            <div class="table-title">My Uploads</div>
+            <div class="table-controls">
+                <div class="search-input-wrap">
+                    <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input type="text" id="table-search" class="search-input" placeholder="Search...">
+                </div>
+                <!-- Column toggle functionality would be a dropdown here. Keeping simple for this iteration as instructed. -->
+                <button class="meta-select" style="cursor:pointer;" id="col-toggle-btn">Columns ▾</button>
+                <div id="col-toggle-menu" class="hidden" style="position:absolute; background:white; border:1px solid var(--color-border); border-radius:8px; padding:8px; margin-top:35px; z-index:10; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+                    <label style="display:block; font-size:13px;"><input type="checkbox" checked class="col-toggle" data-col="1"> Format</label>
+                    <label style="display:block; font-size:13px; margin-top:4px;"><input type="checkbox" checked class="col-toggle" data-col="2"> Subject / Namespace</label>
+                    <label style="display:block; font-size:13px; margin-top:4px;"><input type="checkbox" checked class="col-toggle" data-col="3"> Date</label>
+                </div>
+            </div>
+        </div>
+        <table id="uploads-table">
+            <thead>
+                <tr>
+                    <th scope="col">File Name</th>
+                    <th scope="col" data-col="1">Format</th>
+                    <th scope="col" data-col="2">Namespace</th>
+                    <th scope="col" data-col="3">Date</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="uploads-tbody">
+                <!-- Rows injected via JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
